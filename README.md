@@ -60,7 +60,7 @@ flowchart LR
 
 ## Downloads
 
-Datasets, eval videos and the GR00T checkpoint are published as GitHub Release assets (see Releases).
+Datasets, Cosmos clips, eval videos and curation JSONs are published as GitHub Release assets: [v0.1-hackathon](https://github.com/C-K-Loan/so101-sim2table-nebius/releases/tag/v0.1-hackathon) (sim100 217 MB, cosmos7 16 MB, eval 3 MB, md5s in the release notes). The 12 GB GR00T checkpoint is preserved offline and will follow on the Hugging Face Hub.
 
 **Demo video (1 min 50 s):** [media/so101-sim2table-demo.mp4](media/so101-sim2table-demo.mp4)  
 Raw phone captures of the station and teleop: [media/](media/)
