@@ -9,6 +9,10 @@ SO-101 teleop toolchain for macOS written on the day. This README reports what w
 hardware findings that cost most of the afternoon. Numbers below are the ones in the submitted form
 (`docs/SUBMISSION.txt`).
 
+
+**Demo video (1 min 50 s):** [media/so101-sim2table-demo.mp4](media/so101-sim2table-demo.mp4)  
+Raw phone captures of the station and teleop: [media/](media/)
+
 ## Results, honestly
 
 | Item | Result |
