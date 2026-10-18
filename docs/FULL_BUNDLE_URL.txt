@@ -1,6 +1,6 @@
-Full bundle (8.5 GB) hosted on VM:
+Full bundle (8.4 GB) hosted on VM:
   http://81.85.0.144:8080/so101-sim2table-1429.tar.gz
-  md5 = 3c55182fc3ed3a0137d295646d62ba02
+  md5 = 35c13570ac0622534a2e609b102a3024
 
 Checkpoint shards (3-shard safetensors, 1.3B params post-trained from GR00T-N1.7-3B)
 are inside the full tarball at checkpoints/main/.

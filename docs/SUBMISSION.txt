@@ -4,9 +4,9 @@ SUMMARY:
 Isaac Sim-collected 100-episode SO-101 pick-and-place dataset, bridged to real appearance via NVIDIA Cosmos Transfer 2.5 NIM (7 episodes re-rendered; qualitative sim-to-real look in cosmos_samples/), then post-trained GR00T N1.7-3B for 1500 steps on a Nebius RTX PRO 6000 Blackwell VM. Policy served live via ZMQ for real-arm trials. Honest reporting of a 0/10 sim-eval success — see README gaps section.
 
 LINKS:
-- Full tarball (~8.4 GB, rebuilt 18:12 Berlin; md5 to be confirmed in repo docs/FULL_BUNDLE_URL.txt: 1500-step checkpoint + sim+cosmos data + all 10 eval videos + full logs):
+- Full tarball (9,025,066,130 bytes, final build 18:14 Berlin: 1500-step checkpoint + sim+cosmos data + all 10 eval videos + full logs):
   http://81.85.0.144:8080/so101-sim2table-1429.tar.gz
-  md5: 3c55182fc3ed3a0137d295646d62ba02
+  md5: 35c13570ac0622534a2e609b102a3024
 - Small bundle (8,204,936 bytes: README + manifests + real Cosmos Reason scores + eval metrics + checkpoint config, no weights):
   http://81.85.0.144:8080/so101-sim2table-SMALL.tar.gz
   md5: df921297df161acab88803ae94902da3

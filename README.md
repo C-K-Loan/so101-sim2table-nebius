@@ -27,7 +27,7 @@ command likely never actuated in the eval scene; and 1500 steps on a 3B model wi
 setup issues listed in `patches/NOTES.md`. The sim was also trained on a red cube while the real station
 used a blue one.
 
-The 8.5 GB full bundle (checkpoint shards, all data, 10 eval videos, logs) was served from the training VM at
+The 8.4 GB full bundle (checkpoint shards, all data, 10 eval videos, logs) was served from the training VM at
 submission time; see `docs/FULL_BUNDLE_URL.txt` for the URL and md5. That host is temporary. The small bundle
 contents (README, manifests, metrics, checkpoint configs, two Cosmos samples, two eval clips) are in `docs/`.
 
