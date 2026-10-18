@@ -52,11 +52,11 @@
   <h2 style="color:#e6edf3;font-size:14px;margin:0 0 8px">💡 Tips</h2>
   <div style="font-size:12px">
     <ul style="margin:0;padding-left:20px">
-      <li>If you only see one camera, click <b>Start</b> once, allow permission, then click 🔄 — labels appear only after permission.</li>
-      <li>Look for <code>IW-2000-1</code> or similar USB cam name — that's the hackathon station cam.</li>
+      <li>If you only see one camera, click <b>Start</b> once, allow permission, then click 🔄 - labels appear only after permission.</li>
+      <li>Look for <code>IW-2000-1</code> or similar USB cam name - that's the hackathon station cam.</li>
       <li>Snapshot button saves a PNG to your Downloads folder.</li>
       <li>Closing the tab releases the camera. No background streaming.</li>
-      <li>If the station rig uses the cam via lerobot-record, close this tab FIRST — only one process can own a cam.</li>
+      <li>If the station rig uses the cam via lerobot-record, close this tab FIRST - only one process can own a cam.</li>
     </ul>
   </div>
 </div>
@@ -101,7 +101,7 @@ async function startStream() {
     pillEl.className = 'pill on';
     const track = stream.getVideoTracks()[0];
     const s = track.getSettings();
-    statusEl.textContent = `LIVE: ${track.label} — ${s.width}x${s.height} @ ${s.frameRate || '?'}fps`;
+    statusEl.textContent = `LIVE: ${track.label} - ${s.width}x${s.height} @ ${s.frameRate || '?'}fps`;
     // Refresh cam list to show real labels now that permission is granted
     await listCams();
     // Keep the selected cam highlighted

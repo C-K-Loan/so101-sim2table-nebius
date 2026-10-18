@@ -121,7 +121,7 @@ ENV
     echo "SMOKETEST: record 1 episode, then replay it"
     echo "============================================"
     echo ""
-    echo "STEP 1/2 — Record 1 pick-and-place episode."
+    echo "STEP 1/2 - Record 1 pick-and-place episode."
     echo "  Press Enter to start, do the task on leader arm."
     echo "  Press  s  when done (or let it auto-stop)."
     echo ""
@@ -135,7 +135,7 @@ ENV
       --dataset.push_to_hub=false --play_sounds=false
     echo ""
     echo "============================================"
-    echo "STEP 2/2 — Replay the recorded episode on follower."
+    echo "STEP 2/2 - Replay the recorded episode on follower."
     echo "  Hands off! Follower will move autonomously."
     echo "  Watch: did it do what you did?"
     echo "  Press Enter to start replay..."
@@ -183,7 +183,7 @@ ENV
 <body><h1>SO-101 Camera Snaps</h1>
 <p>Refresh page after re-running <code>bash ~/so101_run.sh camsnap</code>.</p>
 <h2>Index 0 (FaceTime HD, built-in)</h2><img src="cam0.jpg?t=$(date +%s)">
-<h2>Index 1 (IW-2000-1, USB — the one we want)</h2><img src="cam1.jpg?t=$(date +%s)">
+<h2>Index 1 (IW-2000-1, USB - the one we want)</h2><img src="cam1.jpg?t=$(date +%s)">
 </body></html>
 HTML
     echo

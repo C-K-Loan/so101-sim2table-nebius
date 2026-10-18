@@ -1,13 +1,13 @@
-# Robot Arm Challenge — Stack Explained
+# Robot Arm Challenge - Stack Explained
 
 **Date**: 2026-10-18 (today, hack day)
-**Challenge**: Sim to Table — SO-101 pick 30mm cube, place on green pad
+**Challenge**: Sim to Table - SO-101 pick 30mm cube, place on green pad
 **Scored on**: 3 judge-run real-arm trials (10 pts each) + Cosmos use (20) + Nebius Cloud use (20) + tech (15) + creativity ensemble (15) = 100
 
 ## The 5 pieces of the stack
 
 ### 1. Isaac Sim (NVIDIA simulator)
-Virtual robot in a virtual room. You run a hardcoded "scripted expert" policy that knows how to pick-and-place, and record thousands of (camera frames, joint angles, action) tuples = "episodes." Cheap and infinite data. Looks fake though — one light, one table, one renderer.
+Virtual robot in a virtual room. You run a hardcoded "scripted expert" policy that knows how to pick-and-place, and record thousands of (camera frames, joint angles, action) tuples = "episodes." Cheap and infinite data. Looks fake though - one light, one table, one renderer.
 
 ### 2. Cosmos Transfer 2.5 (NVIDIA video model)
 Re-renders your sim videos to look like the real world. Takes the sim video + edge/structure conditioning → outputs same geometry/motion but with real lighting, real-looking table, real textures. Actions stay valid because geometry is preserved. **This is the sim-to-real bridge.**
@@ -78,15 +78,15 @@ Isaac Sim scripted expert
 
 ## What's NOT in the starter (we add)
 
-- Cosmos Transfer 2.5 integration — must build this
-- Cosmos 3 Reasoner call + curation JSON — must build this
-- Dataset manifest listing episode counts per source — must build
-- ACT policy variant (if we want the ensemble) — must add
+- Cosmos Transfer 2.5 integration - must build this
+- Cosmos 3 Reasoner call + curation JSON - must build this
+- Dataset manifest listing episode counts per source - must build
+- ACT policy variant (if we want the ensemble) - must add
 
 ## Open questions for CKL / mentors
 
-1. New Nebius tenant ID + API key — awaiting from CKL
-2. Cosmos API access path — Token Factory? Dedicated endpoint? Ask Dhruv on-site
-3. Station assignment — when does CKL get his SO-101 slot?
-4. HF access to gated Cosmos-Reason2-2B — token confirmed?
-5. Isaac Sim 6.1 license acceptance — handled in setup_vm.sh?
+1. New Nebius tenant ID + API key - awaiting from CKL
+2. Cosmos API access path - Token Factory? Dedicated endpoint? Ask Dhruv on-site
+3. Station assignment - when does CKL get his SO-101 slot?
+4. HF access to gated Cosmos-Reason2-2B - token confirmed?
+5. Isaac Sim 6.1 license acceptance - handled in setup_vm.sh?

@@ -1,4 +1,4 @@
-"""Cosmos 3 Reason curator — scores robot videos, drops bad episodes.
+"""Cosmos 3 Reason curator - scores robot videos, drops bad episodes.
 
 Endpoint: NVIDIA NIM container cosmos-reason2-2b:1.7.0 running locally on the Nebius VM.
 Default base_url: http://localhost:8001/v1 (OpenAI-compatible)
@@ -66,7 +66,7 @@ def score_episode(video_path: str) -> dict:
             "grasp_success": True,
             "placement_success": True,
             "motion_cleanliness": 7,
-            "reason": "STUB (COSMOS_STUB=1) — real endpoint not called",
+            "reason": "STUB (COSMOS_STUB=1) - real endpoint not called",
         })
 
     from openai import OpenAI  # imported lazily so stub mode has no dep

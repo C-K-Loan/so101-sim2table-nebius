@@ -161,7 +161,7 @@ if __name__ == "__main__":
     out_ds = sys.argv[2].rstrip("/") if len(sys.argv) > 2 else f"{sim_ds}.cosmos"
     limit = int(sys.argv[3]) if len(sys.argv) > 3 else None
     if pathlib.Path(sim_ds).resolve() == pathlib.Path(out_ds).resolve():
-        print(f"REFUSED: output_root == sim_dataset_root ({sim_ds}) — would overwrite source", file=sys.stderr)
+        print(f"REFUSED: output_root == sim_dataset_root ({sim_ds}) - would overwrite source", file=sys.stderr)
         sys.exit(2)
     print(f"sim:    {sim_ds}")
     print(f"cosmos: {out_ds}")

@@ -34,14 +34,14 @@ fi
 if [[ "$MODE" == "main" ]]; then
   # Decide training dataset: merged if real teleop landed, else sim+cosmos drop-curated
   if [[ -d "$REAL_DS" ]] && [[ "$(find "$REAL_DS" -type f -name 'episode_*.mp4' 2>/dev/null | wc -l)" -gt 0 ]]; then
-    echo "real teleop found at $REAL_DS — merging into $COSMOS_DS → $MERGED_DS"
+    echo "real teleop found at $REAL_DS - merging into $COSMOS_DS → $MERGED_DS"
     SCORES="$COSMOS_DS/cosmos_reason_scores.json"
     [[ -f "$SCORES" ]] || SCORES=""
     # merge_real_teleop.sh writes to .merged
     bash /home/ubuntu/merge_real_teleop.sh "$REAL_DS" "$COSMOS_DS" "$SCORES" 2>&1 | tail -20
     export TRAIN_DATASET="$MERGED_DS"
   else
-    echo "no real teleop found — training on sim+cosmos (no merge)"
+    echo "no real teleop found - training on sim+cosmos (no merge)"
     export TRAIN_DATASET="$COSMOS_DS"
     # Make sure prepare_dataset ran on this (modality.json + stats.json required)
     cd "$STARTER" && source ./env.sh

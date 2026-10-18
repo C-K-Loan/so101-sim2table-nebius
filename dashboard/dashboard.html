@@ -138,7 +138,7 @@ async function load() {
   document.getElementById('score-label').textContent = `${total} / 100`;
   const breakdown = sc.breakdown || {};
   document.getElementById('score-breakdown').innerHTML =
-    Object.entries(breakdown).map(([k, v]) => `<div>${k}: <b>${v.points}</b> ${v.note ? '— ' + v.note : ''}</div>`).join('');
+    Object.entries(breakdown).map(([k, v]) => `<div>${k}: <b>${v.points}</b> ${v.note ? ' -  ' + v.note : ''}</div>`).join('');
 
   // Diary
   const diaryEl = document.getElementById('diary');

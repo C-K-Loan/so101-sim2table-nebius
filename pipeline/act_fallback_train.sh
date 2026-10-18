@@ -15,7 +15,7 @@
 #   - videos/chunk-000/observation.images.<cam>/episode_XXXXXX.mp4
 # Our pipeline writes exactly this (so101_pickplace.lerobot_writer.LeRobotV21Writer).
 #
-# DO NOT RUN YET. This is the fallback — switch on only if GR00T path is blocked.
+# DO NOT RUN YET. This is the fallback - switch on only if GR00T path is blocked.
 
 set -euo pipefail
 

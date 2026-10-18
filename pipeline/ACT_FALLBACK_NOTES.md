@@ -27,7 +27,7 @@
 
 For this challenge's single task (pick 30mm cube, place on green pad), the generalist prior is a nice-to-have, not a need-to-have. ACT is competitive.
 
-## Dataset compat — zero changes needed
+## Dataset compat - zero changes needed
 
 Starter's `so101_pickplace.lerobot_writer.LeRobotV21Writer` emits standard LeRobot v2.1 format:
 - `meta/info.json` (codebase_version=v2.1, fps=30, video_keys=["observation.images.front", "observation.images.wrist"])
@@ -73,8 +73,8 @@ Challenge rubric: 15 pts for "ensemble of models used."
 
 ## Risks
 
-- `lerobot-train` CLI arg shape may have changed between versions — our script targets current main (commit cloned 2026-10-18). If args fail, consult `lerobot-train --help` on the VM.
-- Local path dataset loading needs `--dataset.root=$PATH` AND `--dataset.repo_id=$PATH` (both set to the same local path per lerobot convention — tested in `lerobot/examples/`).
+- `lerobot-train` CLI arg shape may have changed between versions - our script targets current main (commit cloned 2026-10-18). If args fail, consult `lerobot-train --help` on the VM.
+- Local path dataset loading needs `--dataset.root=$PATH` AND `--dataset.repo_id=$PATH` (both set to the same local path per lerobot convention - tested in `lerobot/examples/`).
 - First training step may stall briefly downloading ResNet18 ImageNet weights (~45 MB).
 
 ## File refs

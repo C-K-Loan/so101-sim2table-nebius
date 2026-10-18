@@ -53,7 +53,7 @@ dropped_eps = set()
 if scores_path and scores_path.exists():
     s = json.load(scores_path.open())
     for ep_id in s.get("dropped", []):
-        # ep_id like "observation.images.front/episode_000003" — grab the trailing index
+        # ep_id like "observation.images.front/episode_000003" - grab the trailing index
         m = re.search(r"episode_(\d+)", ep_id)
         if m:
             dropped_eps.add(int(m.group(1)))

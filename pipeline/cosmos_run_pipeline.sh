@@ -5,7 +5,7 @@
 # Usage:
 #   ./cosmos_run_pipeline.sh <sim_dataset_dir> [limit]
 # Produces:
-#   <sim_dataset_dir>.cosmos/   — Cosmos-augmented videos + transfer_manifest.json
+#   <sim_dataset_dir>.cosmos/   - Cosmos-augmented videos + transfer_manifest.json
 #   <sim_dataset_dir>.cosmos/cosmos_reason_scores.json
 # Prints kept episode count at end.
 #
