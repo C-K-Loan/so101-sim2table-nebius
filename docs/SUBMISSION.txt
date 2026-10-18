@@ -1,0 +1,36 @@
+TITLE: Sim to Table — GR00T N1.7-3B on SO-101 with Cosmos Transfer + Reason on Nebius
+
+SUMMARY:
+Isaac Sim-collected 100-episode SO-101 pick-and-place dataset, bridged to real appearance via NVIDIA Cosmos Transfer 2.5 NIM (7 episodes re-rendered; qualitative sim-to-real look in cosmos_samples/), then post-trained GR00T N1.7-3B for 1500 steps on a Nebius RTX PRO 6000 Blackwell VM. Policy served live via ZMQ for real-arm trials. Honest reporting of a 0/10 sim-eval success — see README gaps section.
+
+LINKS:
+- Full tarball (8.5 GB: 1500-step checkpoint + sim+cosmos data + all 10 eval videos + full logs):
+  http://81.85.0.144:8080/so101-sim2table-1429.tar.gz
+  md5: 3c55182fc3ed3a0137d295646d62ba02
+- Small bundle (8 MB: README + manifests + eval videos + checkpoint config, no weights):
+  http://81.85.0.144:8080/so101-sim2table-SMALL.tar.gz
+  md5: 92485e2564876163758f95634868dd4c
+- Live policy server (ZMQ, GR00T N1.7 protocol, 1.3B post-trained params):
+  tcp://81.85.0.144:5556
+- Starter repo: https://github.com/ddiddi/so101-sim-pickplace-gr00t
+
+DATASET MANIFEST (episode counts per source):
+  sim_raw:          100 episodes (Isaac Sim scripted expert, 92.5% expert success: 99/107 attempts)
+  cosmos_augmented: 7 episodes (Cosmos Transfer 2.5 edge-conditioned re-render of the first 7 front-cam sim videos)
+  real_teleop:      0 episodes
+
+SIM EVAL (closed-loop, 10 episodes):
+  success rate: 0/10 — all timed out at 600 steps
+  inference latency: ~140 ms/step
+  10 .mp4 recordings included in the bundle
+
+NEBIUS USAGE:
+  AI Cloud: 1x RTX PRO 6000 Blackwell VM (gpu-rtx6000-a / 1gpu-24vcpu-218gb), uk-south2 — Isaac Sim collection, GR00T post-training, policy serving
+  Object Storage: bucket ckl-solo-hackathon exists at storage.uk-south2.nebius.cloud; artifact mirrored via VM HTTP server because no S3 access key was issued to our federated identity (IAM key creation = PermissionDenied)
+  Both NVIDIA Cosmos NIM containers (Transfer 2.5, Reason2) hosted on the same VM
+
+KNOWN GAPS (honest):
+  1. Cube color mismatch: sim trained on RED 30 mm cube, real station cube is BLUE 3 cm. No real-teleop episodes bridged the gap at train time.
+  2. Follower arm shoulder servo (ID 2) corrupts the serial bus under load (0/462 read errors driving the other 5 joints vs 40/318 driving #2 alone); the planned real-teleop window went to diagnosis, so zero real-teleop episodes landed before the finetune cutoff.
+  3. 0/10 sim eval: "Failed to find rigid body .../joints/gripper" warning in the log suggests the gripper may not have actuated; also 1500 steps on a 3B model with 100 episodes is thin (NVIDIA recipe: 4000).
+  4. Cosmos Reason curation JSON is honest-flagged as stub-fallback in the README (openai module missing on first run; container crashed on vLLM init on the second). Cosmos Transfer samples + README narrative are our Cosmos evidence.

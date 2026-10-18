@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🎥 SO-101 Live Cam Preview</title>
+<style>
+  body { font-family: -apple-system, ui-monospace, monospace; background: #0b0d10; color: #c8d1d9; padding: 16px; margin: 0; }
+  h1 { color: #58a6ff; margin: 0 0 8px; font-size: 20px; }
+  .sub { color: #8b949e; margin-bottom: 16px; font-size: 12px; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+  select, button { background: #21262d; color: #c8d1d9; border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px; font-family: inherit; font-size: 14px; cursor: pointer; }
+  button { background: #238636; color: white; border: none; }
+  button.stop { background: #da3633; }
+  button:disabled { background: #30363d; color: #666; cursor: not-allowed; }
+  video { width: 100%; max-width: 800px; background: #000; border-radius: 8px; margin-top: 12px; display: block; }
+  .status { font-size: 12px; color: #8b949e; margin-top: 8px; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; margin-right: 4px; }
+  .pill.on { background: #238636; color: white; }
+  .pill.off { background: #30363d; color: #c8d1d9; }
+  .pill.err { background: #da3633; color: white; }
+  code { background: #0d1117; padding: 2px 6px; border-radius: 3px; font-size: 11px; }
+  .note { background: #0d1117; border-left: 3px solid #d29922; padding: 8px 12px; margin: 10px 0; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<h1>🎥 SO-101 Live Cam Preview</h1>
+<div class="sub">
+  <span class="pill off" id="pill">OFF</span>
+  Camera stream stops the second you close this tab. No background use.
+</div>
+
+<div class="note">
+  <b>Permission flow:</b> first time you click Start, your browser asks for camera access. Allow it.
+  Camera list only shows after you've granted permission once (browser privacy).
+  Need HTTPS or localhost or Tailscale IP (which this is) for getUserMedia to work.
+</div>
+
+<div class="card">
+  <label>Pick a camera:</label>
+  <select id="camSel"></select>
+  <button id="startBtn">▶ Start</button>
+  <button id="stopBtn" class="stop" disabled>⏹ Stop</button>
+  <button id="snapBtn" disabled>📸 Snapshot</button>
+  <button id="refreshBtn" title="Re-list cameras">🔄</button>
+  <div class="status" id="status">Click Start to grant permission + see live feed.</div>
+  <video id="vid" autoplay playsinline muted></video>
+</div>
+
+<div class="card">
+  <h2 style="color:#e6edf3;font-size:14px;margin:0 0 8px">💡 Tips</h2>
+  <div style="font-size:12px">
+    <ul style="margin:0;padding-left:20px">
+      <li>If you only see one camera, click <b>Start</b> once, allow permission, then click 🔄 — labels appear only after permission.</li>
+      <li>Look for <code>IW-2000-1</code> or similar USB cam name — that's the hackathon station cam.</li>
+      <li>Snapshot button saves a PNG to your Downloads folder.</li>
+      <li>Closing the tab releases the camera. No background streaming.</li>
+      <li>If the station rig uses the cam via lerobot-record, close this tab FIRST — only one process can own a cam.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+let stream = null;
+const vid = document.getElementById('vid');
+const sel = document.getElementById('camSel');
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const snapBtn = document.getElementById('snapBtn');
+const refreshBtn = document.getElementById('refreshBtn');
+const statusEl = document.getElementById('status');
+const pillEl = document.getElementById('pill');
+
+async function listCams() {
+  try {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const cams = devices.filter(d => d.kind === 'videoinput');
+    sel.innerHTML = cams.map((c, i) =>
+      `<option value="${c.deviceId}">${c.label || `Camera ${i} (grant permission to see name)`}</option>`
+    ).join('') || '<option>No cameras found</option>';
+    statusEl.textContent = `Found ${cams.length} camera(s). Pick one and click Start.`;
+  } catch (e) {
+    statusEl.textContent = 'Error listing: ' + e.message;
+  }
+}
+
+async function startStream() {
+  stopStream();
+  const deviceId = sel.value;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: deviceId ? { deviceId: { exact: deviceId } } : true,
+      audio: false,
+    });
+    vid.srcObject = stream;
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    snapBtn.disabled = false;
+    pillEl.textContent = 'LIVE';
+    pillEl.className = 'pill on';
+    const track = stream.getVideoTracks()[0];
+    const s = track.getSettings();
+    statusEl.textContent = `LIVE: ${track.label} — ${s.width}x${s.height} @ ${s.frameRate || '?'}fps`;
+    // Refresh cam list to show real labels now that permission is granted
+    await listCams();
+    // Keep the selected cam highlighted
+    for (const o of sel.options) if (o.textContent.includes(track.label)) o.selected = true;
+  } catch (e) {
+    pillEl.textContent = 'ERR';
+    pillEl.className = 'pill err';
+    statusEl.textContent = 'getUserMedia error: ' + e.message + '. Did you allow camera access?';
+  }
+}
+
+function stopStream() {
+  if (stream) {
+    stream.getTracks().forEach(t => t.stop());
+    stream = null;
+    vid.srcObject = null;
+  }
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  snapBtn.disabled = true;
+  pillEl.textContent = 'OFF';
+  pillEl.className = 'pill off';
+}
+
+function snapshot() {
+  if (!stream) return;
+  const track = stream.getVideoTracks()[0];
+  const s = track.getSettings();
+  const c = document.createElement('canvas');
+  c.width = s.width || 640;
+  c.height = s.height || 480;
+  c.getContext('2d').drawImage(vid, 0, 0, c.width, c.height);
+  const a = document.createElement('a');
+  a.download = `cam_snap_${Date.now()}.png`;
+  a.href = c.toDataURL('image/png');
+  a.click();
+}
+
+startBtn.onclick = startStream;
+stopBtn.onclick = stopStream;
+snapBtn.onclick = snapshot;
+refreshBtn.onclick = listCams;
+
+window.addEventListener('beforeunload', stopStream);
+window.addEventListener('pagehide', stopStream);
+document.addEventListener('visibilitychange', () => {
+  // optional: stop on hide to free cam when tab backgrounded
+  // if (document.hidden) stopStream();
+});
+
+listCams();
+</script>
+</body>
+</html>

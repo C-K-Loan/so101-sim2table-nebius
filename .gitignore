@@ -1,0 +1,11 @@
+_staging/
+__pycache__/
+*.pyc
+*.tar.gz
+*.safetensors
+checkpoints/
+datasets/
+.env
+*.key
+*.pem
+.so101_env

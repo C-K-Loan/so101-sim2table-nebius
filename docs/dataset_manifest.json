@@ -1,0 +1,24 @@
+{
+  "project": "so101-sim2table",
+  "team": "ckl-solo",
+  "policy": "GR00T-N1.7-3B (post-trained)",
+  "episodes": {
+    "sim_raw": {
+      "count": 100,
+      "source": "Isaac Sim scripted expert, Isaac-PickPlace-Cube-SO101-IK-v0",
+      "cameras": ["front", "wrist"],
+      "fps": 30,
+      "notes": "92.5% expert success rate (99/107 attempts)"
+    },
+    "cosmos_augmented": {
+      "count": 7,
+      "source": "Cosmos Transfer 2.5 edge-conditioned re-render of first 7 sim front-cam clips",
+      "conditioning": "edge",
+      "target_look": "SO-101 lab station appearance",
+      "notes": "capped at 7 due to Transfer throughput at ~5min/episode"
+    },
+    "real_teleop": {"count": 0, "notes": "not available at train time"}
+  },
+  "total_episodes_in_main_training": 100,
+  "ablation": "no cosmos-augmented episodes made it into training because the .cosmos/ output lacks LeRobot meta/data; cosmos integration validated qualitatively via re-rendered samples"
+}

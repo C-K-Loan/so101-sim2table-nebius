@@ -1,0 +1,43 @@
+=== wait policy server port 5556 ===
+server up after 5s
+
+[INFO]: Curriculum Manager: <CurriculumManager> contains 0 active terms.
++-------------------------+
+| Active Curriculum Terms |
++-------------+-----------+
+|    Index    | Name      |
++-------------+-----------+
++-------------+-----------+
+
+[INFO]: Completed setting up the environment...
+/home/ubuntu/work/IsaacLab/so101_sim_pickplace/scripts/eval_in_sim.py:69: DeprecationWarning: Implicit use of ProxyArray as a torch.Tensor is deprecated. Use the explicit .torch property instead (e.g., array.torch).
+  imgs = {k: c.data.output["rgb"][0, :, :, :3].cpu().numpy().astype(np.uint8) for k, c in cams.items()}
+Module isaaclab.actuators.actuator_kernels 0f1c4a7 load on device 'cuda:0' took 10.83 ms  (cached)
+[eval] episode 1/10: timeout after 600 steps (success so far 0/1, inference avg 150 ms)
+[eval] episode 2/10: timeout after 600 steps (success so far 0/2, inference avg 146 ms)
+[eval] episode 3/10: timeout after 600 steps (success so far 0/3, inference avg 144 ms)
+[eval] episode 4/10: timeout after 600 steps (success so far 0/4, inference avg 143 ms)
+[eval] episode 5/10: timeout after 600 steps (success so far 0/5, inference avg 142 ms)
+[eval] episode 6/10: timeout after 600 steps (success so far 0/6, inference avg 141 ms)
+[eval] episode 7/10: timeout after 600 steps (success so far 0/7, inference avg 139 ms)
+[eval] episode 8/10: timeout after 600 steps (success so far 0/8, inference avg 138 ms)
+[eval] episode 9/10: timeout after 600 steps (success so far 0/9, inference avg 138 ms)
+[eval] episode 10/10: timeout after 600 steps (success so far 0/10, inference avg 138 ms)
+[eval] success rate: 0/10 = 0.00
+[eval] outcomes: {'timeout': 10}
+[INFO]: SimulationContext cleared
+2026-10-18T14:27:30Z [19,051ms] [Warning] [omni.physx.tensors.plugin] Failed to find rigid body at '/World/envs/env_0/Robot/joints/gripper'
+2026-10-18T14:27:30Z [19,066ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:27:30Z [19,066ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:27:30Z [19,077ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:27:30Z [19,077ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:27:32Z [20,733ms] [Warning] [omni.kit.material.library.material_extensions] Could not initialize context menu integration: No module named 'omni.kit.context_menu'
+2026-10-18T14:34:31Z [439,455ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:34:31Z [439,465ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:34:31Z [439,465ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:34:31Z [439,465ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:34:31Z [439,472ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:34:31Z [439,476ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:34:31Z [439,477ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+2026-10-18T14:34:31Z [439,477ms] [Warning] [omni.replicator.core.scripts.annotators] omni.hydra.engine.stats is not installed, assuming single GPU
+=== EVAL DONE Sun Oct 18 14:34:32 UTC 2026 ===

@@ -1,0 +1,9 @@
+{"ts":"2026-10-18T12:48:44+00:00","phase":"infra","title":"VM live","body":"RTX PRO 6000 Blackwell at 81.85.0.144 (uk-south2). computeinstance-e05e8cr2fjxn1ne3w0."}
+{"ts":"2026-10-18T12:48:44+00:00","phase":"infra","title":"Setup VM chain","body":"Isaac Sim + Lab + GR00T installed after 4 iterative dep fixes (upstream repo API drift). 14 isaaclab_* subpackages pip-installed."}
+{"ts":"2026-10-18T12:48:44+00:00","phase":"infra","title":"Cosmos NIMs pulled","body":"transfer2.5-2b (19.3GB) + reason2-2b. Both probed clean, boot binaries present."}
+{"ts":"2026-10-18T12:48:44+00:00","phase":"cosmos","title":"Wrappers patched","body":"cosmos_transfer_wrapper.py + cosmos_reason_curator.py now call real NIM endpoints. COSMOS_STUB=1 preserved. Smoke test green."}
+{"ts":"2026-10-18T12:48:44+00:00","phase":"collect","title":"Isaac first-run shader compile","body":"Collect PID stuck on Vulkan cache build. Normal for first run (5-10 min). KitLauncher init now done."}
+{"ts":"2026-10-18T12:48:44+00:00","phase":"dash","title":"Dashboard built","body":"Live progress tracker + artifact listing + dev diary. Refresh 10s."}
+{"ts":"2026-10-18T12:50:21+00:00","phase":"collect","title":"First 4 sim episodes landed","body":"Scripted expert 4/4 success. Rate ~0.37 min/ep. 100 eps ETA 37 min. Visuals clean (yellow arm, red cube, green pad). 640x480 30fps, 315 frames per ep."}
+{"ts":"2026-10-18T12:54:47+00:00","phase":"collect","title":"21 eps + sample MP4 pulled","body":"First real sim video on cupcake viz. Front + wrist cam. 1.1 + 1.3 MB. Episode 10."}
+{"ts":"2026-10-18T13:06:08+00:00","phase":"cosmos","title":"50-ep trigger + Transfer launched","body":"Isaac at 50/100 eps, 96% success rate, 0.384 min/ep. Cosmos Transfer container up, awaiting compile (up to 600s first call). Running in parallel with remaining 50 eps collect. VRAM 5.3GB headroom clean."}

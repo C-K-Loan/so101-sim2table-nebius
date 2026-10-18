@@ -1,0 +1,50 @@
+diff --git a/env.sh b/env.sh
+index 9c963ce..b9573e5 100755
+--- a/env.sh
++++ b/env.sh
+@@ -2,10 +2,10 @@
+ # Shared settings for the Isaac Lab SO-101 block pick-and-place -> GR00T N1.7 post-training pipeline.
+ #   source ~/Desktop/nvidia/so101_sim_pickplace/env.sh
+ 
+-export PROJECT_DIR=/home/solotech007/Desktop/nvidia/so101_sim_pickplace
+-export GR00T_REPO=/home/solotech007/Desktop/nvidia/Isaac-GR00T
+-export ISAACLAB_DIR=/home/solotech007/Desktop/isaac/IsaacLab
+-export ISAACLAB_PY=/home/solotech007/Desktop/isaac/env_isaaclab3/bin/python
++export PROJECT_DIR=/home/ubuntu/work/IsaacLab/so101_sim_pickplace
++export GR00T_REPO=/home/ubuntu/work/IsaacLab/Isaac-GR00T
++export ISAACLAB_DIR=/home/ubuntu/work/IsaacLab
++export ISAACLAB_PY=/home/ubuntu/work/env_isaaclab/bin/python
+ 
+ # Isaac Sim needs these (same as ~/Desktop/isaac/launch_isaacsim.sh)
+ export OMNI_KIT_ACCEPT_EULA=YES
+@@ -13,7 +13,7 @@ export PYTHONPATH="$PROJECT_DIR${PYTHONPATH:+:$PYTHONPATH}"
+ 
+ # Task + dataset
+ export TASK="${TASK:-pick up the red block and place it on the green pad}"
+-export DATASETS_DIR=$HOME/Desktop/nvidia/datasets
++export DATASETS_DIR=/home/ubuntu/datasets
+ export DATASET_NAME="${DATASET_NAME:-so101_sim_pickplace}"
+ export DATASET_ROOT=$DATASETS_DIR/local/$DATASET_NAME
+ export NUM_EPISODES="${NUM_EPISODES:-50}"
+@@ -22,10 +22,10 @@ export NUM_EPISODES="${NUM_EPISODES:-50}"
+ export BASE_MODEL=$GR00T_REPO/checkpoints/GR00T-N1.7-3B
+ export MODALITY_CONFIG=$PROJECT_DIR/gr00t/so101_sim_config.py
+ export EMBODIMENT_TAG=NEW_EMBODIMENT
+-export FINETUNE_OUTPUT="${FINETUNE_OUTPUT:-$HOME/Desktop/nvidia/finetune/$DATASET_NAME}"
++export FINETUNE_OUTPUT="${FINETUNE_OUTPUT:-/home/ubuntu/finetune/$DATASET_NAME}"
+ export CHECKPOINT="${CHECKPOINT:-}"           # set to $FINETUNE_OUTPUT/checkpoint-<N> for start_server.sh
+ export POLICY_HOST=localhost
+-export POLICY_PORT=5555
++export POLICY_PORT=5556
+ 
+ # N1.7 loads the gated nvidia/Cosmos-Reason2-2B backbone from the Hub (do not set HF_HUB_OFFLINE)
+ unset HF_HUB_OFFLINE
+@@ -34,6 +34,6 @@ export TOKENIZERS_PARALLELISM=false
+ gr00t_activate() {
+     cd "$GR00T_REPO"
+     source .venv/bin/activate
+-    source scripts/activate_spark.sh >/dev/null
+-    export LD_LIBRARY_PATH="$VIRTUAL_ENV/lib/python3.12/site-packages/nvpl/lib:$LD_LIBRARY_PATH"
++#     source scripts/activate_spark.sh >/dev/null  # removed for Nebius
++#     export LD_LIBRARY_PATH="$VIRTUAL_ENV/lib/python3.12/site-packages/nvpl/lib:$LD_LIBRARY_PATH"  # removed for Nebius
+ }

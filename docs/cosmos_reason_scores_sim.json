@@ -1,0 +1,114 @@
+{
+  "scored_count": 10,
+  "kept_count": 10,
+  "dropped_count": 0,
+  "threshold_episode_quality": 5.0,
+  "model": "nvidia/cosmos-reason2-2b",
+  "endpoint": "http://localhost:8001/v1",
+  "stated_curation_decision": "We dropped 0 episodes where Cosmos Reason reported grasp_success=False or episode_quality<5.0. This filters sim artifacts (scripted expert near cube-edge grasps, premature release) and real teleop fumbles before training.",
+  "kept": [
+    "observation.images.front/episode_000000",
+    "observation.images.front/episode_000001",
+    "observation.images.front/episode_000002",
+    "observation.images.front/episode_000003",
+    "observation.images.front/episode_000004",
+    "observation.images.front/episode_000005",
+    "observation.images.front/episode_000006",
+    "observation.images.front/episode_000007",
+    "observation.images.front/episode_000008",
+    "observation.images.front/episode_000009"
+  ],
+  "dropped": [],
+  "per_episode_scores": {
+    "observation.images.front/episode_000000": {
+      "score": 8,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 9,
+      "reason": "The robot successfully grasps the red cube, lifts it, and places it on the green square, ensuring the cube remains stationary. The movements are smooth, with no collisions or jitter observed. The gripper maintains a firm grip on the cube throughout the sequence, and the cube is released and rests properly on the green square.",
+      "episode_quality": 8,
+      "_duration_s": 1.3867650032043457
+    },
+    "observation.images.front/episode_000001": {
+      "score": 8,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 9,
+      "reason": "The gripper successfully grasps the cube and lifts it, moving it toward the green square. However, upon placing the cube, it collides with the green square, causing the cube to shift slightly and settle atop the green square rather than directly on top of the red cube.\n\nJoint trajectories appear smooth overall, but the cube's final placement is compromised by the collision with the green square, affecting cleanliness slightly.\nThe cube is initially grasped correctly, but the subsequent motion introduces an unintended interaction with the green square, reducing overall success in precise placement.",
+      "episode_quality": 8,
+      "_duration_s": 1.031588077545166
+    },
+    "observation.images.front/episode_000002": {
+      "score": 8,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 9,
+      "reason": "The robot successfully grasps the red cube and places it on the green pad, maintaining a stable grasp and smooth movements without any collisions or jitter. The gripper closes firmly on the cube, ensuring it does not slip, and the cube is released cleanly and remains at rest on the green pad.",
+      "episode_quality": 8,
+      "_duration_s": 0.7817108631134033
+    },
+    "observation.images.front/episode_000003": {
+      "score": 9,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 10,
+      "reason": "The robot gripper successfully grasps the red cube and lifts it, then moves it to align with the green square. The cube is released and rests on the green square without any deviation or slipping, indicating a clean and precise execution of the task.",
+      "episode_quality": 9,
+      "_duration_s": 0.7431821823120117
+    },
+    "observation.images.front/episode_000004": {
+      "score": 9,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 10,
+      "reason": "The gripper successfully grasps the red cube without slipping, lifts it, and places it on the green pad, resulting in a smooth trajectory and no collisions or jitter during the motion.",
+      "episode_quality": 9,
+      "_duration_s": 0.6617231369018555
+    },
+    "observation.images.front/episode_000005": {
+      "score": 8,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 10,
+      "reason": "The gripper successfully grasps the red cube, lifts it, and places it on the green square. The motion is smooth with no collisions or jitter. The cube remains stationary after placement, indicating a successful grasp and placement.",
+      "episode_quality": 8,
+      "_duration_s": 0.6872432231903076
+    },
+    "observation.images.front/episode_000006": {
+      "score": 10,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 10,
+      "reason": "The gripper successfully grasps the red cube and lifts it, then places it atop the green square, maintaining alignment and avoiding collisions. The trajectories are smooth, and the cube remains stationary after placement, fulfilling the task requirements.",
+      "episode_quality": 10,
+      "_duration_s": 0.6774940490722656
+    },
+    "observation.images.front/episode_000007": {
+      "score": 10,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 10,
+      "reason": "The gripper successfully grasps the red cube and lifts it, then places it on the green square. The motion is smooth, with no collisions or jitter, and the cube is released and rests at rest on the green pad.",
+      "episode_quality": 10,
+      "_duration_s": 0.6811161041259766
+    },
+    "observation.images.front/episode_000008": {
+      "score": 8,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 9,
+      "reason": "The robot successfully grasps the red cube and places it on the green square, with smooth and precise movements. There are no collisions, jitter, or slipping issues during the task. The gripper maintains a firm grip on the cube throughout the sequence, ensuring reliable placement.",
+      "episode_quality": 8,
+      "_duration_s": 0.7426762580871582
+    },
+    "observation.images.front/episode_000009": {
+      "score": 8,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 9,
+      "reason": "The robot successfully grasps the red cube, lifts it, moves it to the green cube, and places it on top. The motion is smooth, with no collisions or jitter, and the cube is released at rest on the green pad.",
+      "episode_quality": 8,
+      "_duration_s": 0.7155561447143555
+    }
+  }
+}

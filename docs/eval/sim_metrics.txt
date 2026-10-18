@@ -1,0 +1,11 @@
+[eval] episode 1/10: timeout after 600 steps (success so far 0/1, inference avg 150 ms)
+[eval] episode 2/10: timeout after 600 steps (success so far 0/2, inference avg 146 ms)
+[eval] episode 3/10: timeout after 600 steps (success so far 0/3, inference avg 144 ms)
+[eval] episode 4/10: timeout after 600 steps (success so far 0/4, inference avg 143 ms)
+[eval] episode 5/10: timeout after 600 steps (success so far 0/5, inference avg 142 ms)
+[eval] episode 6/10: timeout after 600 steps (success so far 0/6, inference avg 141 ms)
+[eval] episode 7/10: timeout after 600 steps (success so far 0/7, inference avg 139 ms)
+[eval] episode 8/10: timeout after 600 steps (success so far 0/8, inference avg 138 ms)
+[eval] episode 9/10: timeout after 600 steps (success so far 0/9, inference avg 138 ms)
+[eval] episode 10/10: timeout after 600 steps (success so far 0/10, inference avg 138 ms)
+[eval] success rate: 0/10 = 0.00

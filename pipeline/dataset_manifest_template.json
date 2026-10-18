@@ -1,0 +1,43 @@
+{
+  "project": "so101-sim-pickplace",
+  "team": "ckl-solo",
+  "submission_timestamp": "FILL_AT_SUBMIT",
+  "policy": "GR00T-N1.7-3B",
+  "episodes": {
+    "sim_raw": {
+      "count": 0,
+      "source": "Isaac Sim scripted expert, Isaac-PickPlace-Cube-SO101-IK-v0",
+      "cube_positions": "random on +Y half of workspace",
+      "notes": "all successful (block released on green pad)"
+    },
+    "cosmos_augmented": {
+      "count": 0,
+      "source": "Cosmos Transfer 2.5 edge-conditioned re-render of sim_raw",
+      "conditioning": "edge",
+      "target_look": "SO-101 station appearance (table surface, lamp, camera POV)",
+      "notes": "motion/actions unchanged from source"
+    },
+    "real_teleop": {
+      "count": 0,
+      "source": "SO-101 leader/follower teleop at Berlin station",
+      "cap_policy": "<=50 per challenge rule",
+      "notes": "cube positions span the 9-spot grid"
+    }
+  },
+  "total_episodes": 0,
+  "total_cap": 300,
+  "curation": {
+    "cosmos_reason_version": "Cosmos 3 Reason",
+    "scored_set": "all sim_raw + all cosmos_augmented + all real_teleop",
+    "curation_json_path": "cosmos_reason_scores.json",
+    "stated_decision": "DROP all episodes where Cosmos Reason reports grasp_success=false OR motion_cleanliness < THRESHOLD (threshold to lock Sunday)",
+    "dropped_count": 0
+  },
+  "training_mix_main": "sim_raw + cosmos_augmented + real_teleop (post-curation)",
+  "training_mix_ablation": "sim_raw + real_teleop ONLY (no Cosmos augmentation)",
+  "checkpoints": {
+    "main": "FILL",
+    "ablation": "FILL"
+  },
+  "nebius_object_storage_path": "FILL"
+}

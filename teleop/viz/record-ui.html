@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 SO-101 Record UI</title>
+<style>
+body{font-family:ui-monospace,monospace;background:#0b0d10;color:#c8d1d9;padding:16px;margin:0}
+h1{color:#58a6ff;margin:0 0 8px;font-size:20px}
+.sub{color:#8b949e;margin-bottom:16px;font-size:12px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+button{background:#238636;color:white;border:none;border-radius:6px;padding:10px 18px;font-size:14px;cursor:pointer;margin-right:4px;font-family:inherit;font-weight:600}
+button.stop{background:#da3633}
+button.ghost{background:#30363d;color:#c8d1d9}
+button:disabled{background:#30363d;color:#666;cursor:not-allowed}
+video{width:100%;max-width:700px;background:#000;border-radius:8px}
+table{font-size:11px;width:100%;border-collapse:collapse}
+td,th{padding:4px 6px;border-bottom:1px solid #21262d;text-align:left}
+th{color:#58a6ff}
+.ok{color:#238636}
+.warn{color:#d29922}
+.err{color:#da3633}
+.pill{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;margin:0 4px;font-weight:600}
+.pill.rec{background:#da3633;color:white}
+.pill.idle{background:#30363d;color:#c8d1d9}
+.counter{font-size:36px;color:#58a6ff;font-weight:700}
+select{background:#21262d;color:#c8d1d9;border:1px solid #30363d;border-radius:6px;padding:8px 10px;font-family:inherit;margin-right:4px}
+.flash{animation:flash 1s infinite}
+@keyframes flash{50%{opacity:.4}}
+code{background:#0d1117;padding:2px 6px;border-radius:3px;font-size:11px}
+</style>
+</head>
+<body>
+<h1>🤖 SO-101 Recording UI</h1>
+<div class="sub">
+  Backend: <code>http://localhost:8779</code> &nbsp;·&nbsp; Dataset: <code>~/.cache/huggingface/lerobot/local/so101_realteleop/</code>
+  <span class="pill idle" id="statusPill">IDLE</span>
+</div>
+
+<div class="grid">
+<div class="card">
+  <h2 style="margin:0 0 8px;font-size:14px;color:#e6edf3">📹 Camera</h2>
+  <select id="camSel"></select>
+  <button id="camStart">▶ Enable</button>
+  <button id="camStop" class="ghost" disabled>⏸ Pause</button>
+  <video id="vid" autoplay playsinline muted></video>
+  <div style="font-size:11px;color:#8b949e;margin-top:4px" id="camStatus">Pick cam + Enable (first time grants permission)</div>
+</div>
+
+<div class="card">
+  <h2 style="margin:0 0 8px;font-size:14px;color:#e6edf3">🎬 Session</h2>
+  <div class="counter" id="counter">0 / 15</div>
+  <div style="margin:14px 0">
+    <button id="startBtn">▶ Start Episode</button>
+    <button id="stopBtn" class="stop" disabled>⏹ Stop + Save</button>
+    <button id="mirrorBtn" class="ghost" style="margin-left:8px">🤖 Arm: ...</button>
+  </div>
+  <div style="font-size:11px;color:#8b949e" id="recStatus">Not recording. Enable camera first.</div>
+</div>
+</div>
+
+<div class="card">
+  <h2 style="margin:0 0 8px;font-size:14px;color:#e6edf3">⚙️ Live Motor State (polling 500ms)</h2>
+  <table id="motors"><tr><td style="color:#8b949e">Waiting for backend...</td></tr></table>
+  <div style="font-size:11px;color:#8b949e;margin-top:6px" id="serialStatus">Waiting...</div>
+</div>
+
+<script>
+const JOINTS = ["shoulder_pan","shoulder_lift","elbow_flex","wrist_flex","wrist_roll","gripper"];
+const EP_TARGET = 15;
+const BACKEND = "http://localhost:8779";
+let stream=null, recorder=null, recChunks=[], episodeIdx=null, episodeCount=0;
+
+const vid=document.getElementById('vid'), camSel=document.getElementById('camSel');
+const camStart=document.getElementById('camStart'), camStop=document.getElementById('camStop'), camStatus=document.getElementById('camStatus');
+const startBtn=document.getElementById('startBtn'), stopBtn=document.getElementById('stopBtn');
+const counter=document.getElementById('counter'), statusPill=document.getElementById('statusPill'), recStatus=document.getElementById('recStatus');
+const motorsTbl=document.getElementById('motors'), serialStatus=document.getElementById('serialStatus');
+
+async function listCams(){
+  try{
+    const devs=await navigator.mediaDevices.enumerateDevices();
+    const cams=devs.filter(d=>d.kind==='videoinput');
+    camSel.innerHTML=cams.map((c,i)=>`<option value="${c.deviceId}">${c.label||`Camera ${i} (grant permission to see label)`}</option>`).join('');
+    for(const o of camSel.options)if(/IW-2000|USB/i.test(o.textContent))o.selected=true;
+  }catch(e){camStatus.textContent='enumerateDevices error: '+e.message}
+}
+listCams();
+
+async function startCam(){
+  stopCam();
+  const deviceId=camSel.value;
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({
+      video:deviceId?{deviceId:{exact:deviceId},width:640,height:480,frameRate:30}:true,
+      audio:false
+    });
+    vid.srcObject=stream;
+    camStart.disabled=true;camStop.disabled=false;
+    const tr=stream.getVideoTracks()[0];
+    camStatus.textContent='LIVE: '+tr.label;
+    listCams();
+    for(const o of camSel.options)if(o.textContent.includes(tr.label))o.selected=true;
+  }catch(e){camStatus.textContent='getUserMedia error: '+e.message}
+}
+function stopCam(){
+  if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;vid.srcObject=null}
+  camStart.disabled=false;camStop.disabled=true;
+  camStatus.textContent='Camera paused.';
+}
+camStart.onclick=startCam;camStop.onclick=stopCam;
+
+async function pollState(){
+  try{
+    const r=await fetch(BACKEND+'/state');
+    const s=await r.json();
+    const html=[`<tr><th>Joint</th><th>Leader</th><th>Follower</th><th>L.torq</th><th>F.torq</th></tr>`];
+    for(let i=0;i<6;i++){
+      const lp=s.leader_positions[i],fp=s.follower_positions[i];
+      const lt=s.leader_torques[i],ft=s.follower_torques[i];
+      html.push(`<tr><td>${JOINTS[i]}</td><td>${lp??'-'}</td><td>${fp??'-'}</td><td class="${lt===1?'ok':'warn'}">${lt===1?'ON':'off'}</td><td class="${ft===1?'ok':'warn'}">${ft===1?'ON':'off'}</td></tr>`);
+    }
+    motorsTbl.innerHTML=html.join('');
+    serialStatus.innerHTML=`L=${s.leader_ok?'<span class=ok>ok</span>':'<span class=err>FAIL</span>'} F=${s.follower_ok?'<span class=ok>ok</span>':'<span class=err>FAIL</span>'} · errors ${s.poll_errors} · status ${s.status}`;
+  }catch(e){serialStatus.textContent='backend unreachable: '+e.message}
+}
+
+async function refreshInfo(){
+  try{
+    const r=await fetch(BACKEND+'/dataset_info');
+    const s=await r.json();
+    episodeCount=s.episode_count;
+    counter.textContent=`${episodeCount} / ${EP_TARGET}`;
+  }catch(_){}
+}
+
+async function startEpisode(){
+  if(!stream){try{await startCam()}catch(_){}}
+  if(!stream){alert('Camera not enabled (permission?). Click Enable, allow camera, then Start.');return}
+  recChunks=[];
+  const r=await fetch(BACKEND+'/start_episode',{method:'POST'});
+  const info=await r.json();
+  if(info.error){alert(info.error);return}
+  episodeIdx=info.episode_idx;
+  recorder=new MediaRecorder(stream,{mimeType:'video/webm;codecs=vp8'});
+  recorder.ondataavailable=e=>{if(e.data.size>0)recChunks.push(e.data)};
+  recorder.start(1000);
+  startBtn.disabled=true;stopBtn.disabled=false;
+  statusPill.textContent='REC';statusPill.className='pill rec flash';
+  recStatus.textContent=`Recording episode ${episodeIdx}...`;
+}
+
+async function stopEpisode(){
+  if(!recorder)return;
+  const done=new Promise(res=>recorder.onstop=res);
+  recorder.stop();
+  await done;
+  const blob=new Blob(recChunks,{type:'video/webm'});
+  recStatus.textContent=`Uploading ${(blob.size/1024/1024).toFixed(1)} MB...`;
+  await fetch(`${BACKEND}/upload_video?idx=${episodeIdx}`,{method:'POST',headers:{'Content-Type':'video/webm'},body:blob});
+  const r=await fetch(BACKEND+'/stop_episode',{method:'POST'});
+  const s=await r.json();
+  recStatus.textContent=`Saved episode ${s.episode_idx}: ${s.frames} frames${s.parquet_ok?'':' (parquet FAILED)'}`;
+  statusPill.textContent='IDLE';statusPill.className='pill idle';
+  startBtn.disabled=false;stopBtn.disabled=true;
+  recorder=null;recChunks=[];
+  refreshInfo();
+}
+
+startBtn.onclick=startEpisode;stopBtn.onclick=stopEpisode;
+
+const mirrorBtn=document.getElementById('mirrorBtn');
+let mirrorNow=null;
+async function setMirror(on){
+  try{const r=await fetch(BACKEND+'/mirror?on='+(on?1:0),{method:'POST'});const j=await r.json();mirrorNow=j.mirror;paintMirror();}
+  catch(e){mirrorBtn.textContent='Arm: backend down';}
+}
+function paintMirror(){
+  if(mirrorNow===null){mirrorBtn.textContent='Arm: ...';return}
+  mirrorBtn.textContent=mirrorNow?'Arm LIVE - click to rest':'Arm LIMP - click to go live';
+  mirrorBtn.style.background=mirrorNow?'#238636':'#30363d';mirrorBtn.style.color='#fff';
+}
+mirrorBtn.onclick=()=>setMirror(!mirrorNow);
+async function pollMirror(){
+  try{const r=await fetch(BACKEND+'/state');const j=await r.json();mirrorNow=!!j.mirror;paintMirror();
+      if(j.temp_trip){mirrorBtn.textContent='TEMP TRIP '+j.temp_trip+' (cooling)';}}catch(e){}
+}
+setInterval(pollMirror,700);pollMirror();
+stopBtn.style.display='none'; mirrorBtn.style.display='none'; camStop.style.display='none';
+let isRec=false;
+startBtn.onclick=async()=>{
+  if(!isRec){
+    await startEpisode();
+    if(stopBtn.disabled===false){ isRec=true; startBtn.disabled=false; startBtn.textContent='Stop + Save'; startBtn.className='stop'; }
+    else { startBtn.disabled=false; }
+  } else {
+    startBtn.disabled=true; startBtn.textContent='Saving...';
+    await stopEpisode();
+    isRec=false; startBtn.disabled=false; startBtn.textContent='Start Episode'; startBtn.className='';
+  }
+};
+stopBtn.onclick=null;
+setInterval(pollState,500);setInterval(refreshInfo,2000);
+pollState();refreshInfo();
+window.addEventListener('beforeunload',()=>{stopCam()});
+</script>
+</body>
+</html>

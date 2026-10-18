@@ -1,0 +1,85 @@
+{
+  "scored_count": 7,
+  "kept_count": 5,
+  "dropped_count": 2,
+  "threshold_episode_quality": 5.0,
+  "model": "nvidia/cosmos-reason2-2b",
+  "endpoint": "http://localhost:8001/v1",
+  "stated_curation_decision": "We dropped 2 episodes where Cosmos Reason reported grasp_success=False or episode_quality<5.0. This filters sim artifacts (scripted expert near cube-edge grasps, premature release) and real teleop fumbles before training.",
+  "kept": [
+    "observation.images.front/episode_000000",
+    "observation.images.front/episode_000001",
+    "observation.images.front/episode_000002",
+    "observation.images.front/episode_000004",
+    "observation.images.front/episode_000006"
+  ],
+  "dropped": [
+    "observation.images.front/episode_000003",
+    "observation.images.front/episode_000005"
+  ],
+  "per_episode_scores": {
+    "observation.images.front/episode_000000": {
+      "score": 9,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 10,
+      "reason": "The robot successfully grasps the cube and places it on the green pad without any slipping or unintended deviations in motion, indicating precise and controlled movements throughout the sequence.",
+      "episode_quality": 9,
+      "_duration_s": 7.984516859054565
+    },
+    "observation.images.front/episode_000001": {
+      "score": 8,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 9,
+      "reason": "The robot successfully grasps the pink cube and places it on the green pad. The motions are smooth and precise, with no collisions or jitter observed. The cube remains stationary after being placed, indicating a successful placement.",
+      "episode_quality": 8,
+      "_duration_s": 1.5678179264068604
+    },
+    "observation.images.front/episode_000002": {
+      "score": 7,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 9,
+      "reason": "The robot's grasp is successful, as it manages to pick up the cube without slipping. The cube is then placed on the green pad, achieving the intended goal. The motion is relatively smooth, with minimal jitter or collisions. However, the final positioning of the cube on the pad is not fully satisfactory, as it remains slightly offset and does not achieve perfect alignment with the pad.",
+      "episode_quality": 7,
+      "_duration_s": 1.5429022312164307
+    },
+    "observation.images.front/episode_000003": {
+      "score": 9,
+      "grasp_success": false,
+      "placement_success": true,
+      "motion_cleanliness": 9,
+      "reason": "The robot fails to grasp the pink cube, as it merely pushes it aside instead of making contact with it. Additionally, the cube is displaced from its original position, indicating poor grasp control. The motion of the robot arms is erratic and jittery, contributing to overall motion cleanliness issues.",
+      "episode_quality": 9,
+      "_duration_s": 1.47055983543396
+    },
+    "observation.images.front/episode_000004": {
+      "score": 8,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 9,
+      "reason": "The robot successfully grasps the cube and places it on the green pad, maintaining a stable grip and smooth motion without collisions or jitter. The trajectory of the robot arm is clear and precise, ensuring the cube is accurately positioned.",
+      "episode_quality": 8,
+      "_duration_s": 1.461923360824585
+    },
+    "observation.images.front/episode_000005": {
+      "score": 7,
+      "grasp_success": false,
+      "placement_success": false,
+      "motion_cleanliness": 9,
+      "reason": "The robot's gripper fails to securely grasp the square prism, causing it to slip during the attempted pick-up. Additionally, the prism is not fully released upon placement, resulting in an unsuccessful placement.",
+      "episode_quality": 7,
+      "_duration_s": 1.4817519187927246
+    },
+    "observation.images.front/episode_000006": {
+      "score": 9,
+      "grasp_success": true,
+      "placement_success": true,
+      "motion_cleanliness": 10,
+      "reason": "The robot successfully grasps the cube without slipping and places it on the green pad, maintaining precise and controlled movements without any collisions or jitter. The trajectory of the arm is smooth, indicating a clean and efficient motion sequence.",
+      "episode_quality": 9,
+      "_duration_s": 1.3570127487182617
+    }
+  }
+}
