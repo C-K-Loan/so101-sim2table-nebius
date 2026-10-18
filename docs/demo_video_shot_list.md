@@ -12,7 +12,7 @@
 | 0:10-0:25 | Isaac Sim window | Scripted expert picking cube, 5 fast cuts, "100 sim episodes in 20 min" overlay |
 | 0:25-0:45 | Side-by-side | LEFT: raw sim video. RIGHT: Cosmos Transfer re-rendered. "Same motion, real look." |
 | 0:45-1:00 | Cosmos Reason output | Terminal scroll of `cosmos_reason_scores.json`, highlight the one curation decision |
-| 1:00-1:15 | Dataset manifest | Flash `dataset_manifest.json` — sim/cosmos/real counts, 300 cap |
+| 1:00-1:15 | Dataset manifest | Flash `dataset_manifest.json` - sim/cosmos/real counts, 300 cap |
 | 1:15-1:30 | Nebius training | Nebius Cloud UI showing L40S VM, loss curve going down, "4000 steps, GR00T N1.7-3B" |
 | 1:30-1:50 | REAL ARM TRIAL (phone cam) | 1 full pick-and-place attempt on the SO-101. Show cube at edge of grid for drama. Include ANY attempt, success optional. |
 | 1:50-2:00 | Scoreboard + call to action | "Main vs ablation (no Cosmos) results side-by-side. Repo + checkpoints: github.com/..., HuggingFace: ..." |
@@ -21,7 +21,7 @@
 
 - [ ] Record Isaac Sim scripted expert as soon as collect.sh runs
 - [ ] Record terminal output of each pipeline stage
-- [ ] Phone cam ready at SO-101 station — tape it to a water bottle for stability
+- [ ] Phone cam ready at SO-101 station - tape it to a water bottle for stability
 - [ ] Grab 1 clean before/after Cosmos frame for the side-by-side
 - [ ] Loss curve screenshot during finetune
 - [ ] Submission folder tree screenshot

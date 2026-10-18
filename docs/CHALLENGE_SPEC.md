@@ -1,7 +1,7 @@
-# Sim to Table — Official Challenge Spec
+# Sim to Table - Official Challenge Spec
 
 **Event**: NVIDIA × NEBIUS AI Builders Hackathon, Berlin, 2026-10-18
-**Challenge**: Physical AI — train in sim, bridge with Cosmos, teleop on real SO-101 arms, evaluate in real world
+**Challenge**: Physical AI - train in sim, bridge with Cosmos, teleop on real SO-101 arms, evaluate in real world
 
 ## Task
 
@@ -33,19 +33,19 @@ Sim alone fails on hardware (one light, one table, one renderer). Real data alon
 
 ## Judging (100 pts)
 
-Every team has a dedicated station: SO-101 leader/follower pair, camera on standard mount, lamp, 30 mm cube, green pad, 9-spot cube grid taped to table. Judges control ONE thing: cube placement — they place it on grid spots in a fixed sequence identical for every team, revealed only at eval time. A policy that only learned one spot will fail most of them.
+Every team has a dedicated station: SO-101 leader/follower pair, camera on standard mount, lamp, 30 mm cube, green pad, 9-spot cube grid taped to table. Judges control ONE thing: cube placement - they place it on grid spots in a fixed sequence identical for every team, revealed only at eval time. A policy that only learned one spot will fail most of them.
 
 | Criterion | Pts | How scored |
 |---|---|---|
 | Accuracy (real-world success) | 30 | 3 judge-run trials on real SO-101, 2 min cap each. 10 pts per success. Success = cube released + at rest on green pad. Leaderboard shows x / 3. |
-| Cosmos — meaningful use | 20 | 10 for Reason: called on your own sim/real videos, JSON saved, one stated curation decision made from it. 10 for Transfer: structure-preserving augmentation of sim data toward real look. |
+| Cosmos - meaningful use | 20 | 10 for Reason: called on your own sim/real videos, JSON saved, one stated curation decision made from it. 10 for Transfer: structure-preserving augmentation of sim data toward real look. |
 | Nebius | 20 | Usage of Nebius Cloud for training |
 | Technical competence | 15 | Be able to deploy on the robot IRL |
 | Creativity | 15 | Ensemble of models used |
 
 ## How Cosmos + Nebius should be used
 
-**Cosmos Transfer 2.5**: bridge. Re-render sim episodes so lighting/table/textures look like real world while geometry + motion stay fixed, so recorded actions remain valid. Use **edge conditioning** — preserves structure, keeps actions aligned. Target the look of your real station.
+**Cosmos Transfer 2.5**: bridge. Re-render sim episodes so lighting/table/textures look like real world while geometry + motion stay fixed, so recorded actions remain valid. Use **edge conditioning** - preserves structure, keeps actions aligned. Target the look of your real station.
 
 **Cosmos 3 Reason**: curator. Point it at sim + real episode MP4s to score (did the grasp succeed, was the motion clean). Drop bad episodes before training.
 

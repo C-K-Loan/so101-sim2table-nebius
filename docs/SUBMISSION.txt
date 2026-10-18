@@ -1,7 +1,7 @@
-TITLE: Sim to Table — GR00T N1.7-3B on SO-101 with Cosmos Transfer + Reason on Nebius
+TITLE: Sim to Table - GR00T N1.7-3B on SO-101 with Cosmos Transfer + Reason on Nebius
 
 SUMMARY:
-Isaac Sim-collected 100-episode SO-101 pick-and-place dataset, bridged to real appearance via NVIDIA Cosmos Transfer 2.5 NIM (7 episodes re-rendered; qualitative sim-to-real look in cosmos_samples/), then post-trained GR00T N1.7-3B for 1500 steps on a Nebius RTX PRO 6000 Blackwell VM. Policy served live via ZMQ for real-arm trials. Honest reporting of a 0/10 sim-eval success — see README gaps section.
+Isaac Sim-collected 100-episode SO-101 pick-and-place dataset, bridged to real appearance via NVIDIA Cosmos Transfer 2.5 NIM (7 episodes re-rendered; qualitative sim-to-real look in cosmos_samples/), then post-trained GR00T N1.7-3B for 1500 steps on a Nebius RTX PRO 6000 Blackwell VM. Policy served live via ZMQ for real-arm trials. Honest reporting of a 0/10 sim-eval success - see README gaps section.
 
 LINKS:
 - Full tarball (9,025,066,130 bytes, final build 18:14 Berlin: 1500-step checkpoint + sim+cosmos data + all 10 eval videos + full logs):
@@ -20,12 +20,12 @@ DATASET MANIFEST (episode counts per source):
   real_teleop:      0 episodes
 
 SIM EVAL (closed-loop, 10 episodes):
-  success rate: 0/10 — all timed out at 600 steps
+  success rate: 0/10 - all timed out at 600 steps
   inference latency: ~140 ms/step
   10 .mp4 recordings included in the bundle
 
 NEBIUS USAGE:
-  AI Cloud: 1x RTX PRO 6000 Blackwell VM (gpu-rtx6000-a / 1gpu-24vcpu-218gb), uk-south2 — Isaac Sim collection, GR00T post-training, policy serving
+  AI Cloud: 1x RTX PRO 6000 Blackwell VM (gpu-rtx6000-a / 1gpu-24vcpu-218gb), uk-south2 - Isaac Sim collection, GR00T post-training, policy serving
   Object Storage: bucket ckl-solo-hackathon exists at storage.uk-south2.nebius.cloud; artifact mirrored via VM HTTP server because no S3 access key was issued to our federated identity (IAM key creation = PermissionDenied)
   Both NVIDIA Cosmos NIM containers (Transfer 2.5, Reason2) hosted on the same VM
 

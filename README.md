@@ -10,6 +10,58 @@ hardware findings that cost most of the afternoon. Numbers below are the ones in
 (`docs/SUBMISSION.txt`).
 
 
+<p align="center">
+  <img src="media/stills/hero.jpg" alt="Cosmos Transfer 2.5: Isaac Sim episode (left) re-rendered toward the real station look (right)" width="100%">
+  <br><sub>Cosmos Transfer 2.5: the same Isaac Sim episode before (left) and after (right) edge-conditioned re-rendering. Actions unchanged.</sub>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/track-Physical%20AI-76B900?style=flat-square" alt="Track: Physical AI">
+  <img src="https://img.shields.io/badge/Nebius-RTX%20PRO%206000-1f6feb?style=flat-square" alt="Nebius RTX PRO 6000">
+  <img src="https://img.shields.io/badge/Cosmos-Transfer%202.5%20%2B%20Reason2-76B900?style=flat-square" alt="Cosmos Transfer 2.5 + Reason2">
+  <img src="https://img.shields.io/badge/policy-GR00T%20N1.7--3B-76B900?style=flat-square" alt="GR00T N1.7-3B">
+  <img src="https://img.shields.io/badge/lerobot-0.4.4-ff9d00?style=flat-square" alt="lerobot 0.4.4">
+  <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License MIT">
+</p>
+
+<p align="center">
+  <img src="media/demo.gif" alt="13 second cut of the demo video: the real station, then the Cosmos sim-vs-real split" width="560">
+</p>
+
+## At a glance
+
+<table>
+  <tr>
+    <td align="center"><img src="media/stills/station.jpg" width="400"><br><sub>The real station: SO-101 follower, 3x3 pickup grid, blue cube, green pad</sub></td>
+    <td align="center"><img src="media/stills/isaac_sim_expert.jpg" width="400"><br><sub>Isaac Sim scripted expert: 100 episodes on a Nebius RTX PRO 6000</sub></td>
+    <td align="center"><img src="media/stills/cosmos_split.jpg" width="400"><br><sub>Cosmos Transfer 2.5: sim (left) vs re-rendered real look (right)</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="media/stills/real_teleop.jpg" width="400"><br><sub>Real leader/follower teleop on the SO-101 (recorder built on the day)</sub></td>
+    <td align="center"><img src="media/stills/groot_eval.jpg" width="400"><br><sub>GR00T N1.7-3B, 1500 steps: closed-loop sim eval, 0/10, reported honestly</sub></td>
+    <td align="center"><img src="media/stills/cosmos_frame.jpg" width="400"><br><sub>Cosmos Transfer output frame: the sim arm on a real-looking table</sub></td>
+  </tr>
+</table>
+
+## Pipeline
+
+```mermaid
+flowchart LR
+    A[Isaac Sim 6.1 + Isaac Lab<br/>scripted expert, 100 episodes] --> B[LeRobot v2.1 dataset<br/>front + wrist cam, 30 Hz]
+    B --> C[Cosmos Transfer 2.5 NIM<br/>edge-conditioned re-render, 7 episodes]
+    C --> D[Cosmos Reason2 NIM<br/>scores + curation JSON]
+    B --> D
+    D --> E[GR00T N1.7-3B post-training<br/>Nebius RTX PRO 6000, 1500 steps]
+    E --> F[ZMQ policy server<br/>~140 ms per step]
+    F --> G[Closed-loop sim eval<br/>0/10]
+    F -. deploy .-> H[SO-101 real arm<br/>judge trials not reached]
+    T[Real teleop on SO-101<br/>attempted, 0 episodes in training] -. planned merge .-> E
+```
+
+## Downloads
+
+Datasets, eval videos and the GR00T checkpoint are published as GitHub Release assets (see Releases).
+
 **Demo video (1 min 50 s):** [media/so101-sim2table-demo.mp4](media/so101-sim2table-demo.mp4)  
 Raw phone captures of the station and teleop: [media/](media/)
 
