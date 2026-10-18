@@ -5,8 +5,8 @@
 # Day-master gate: DO NOT docker-pull without explicit ack (containers are ~tens of GB each).
 #
 # Usage on the VM:
-#   NGC_API_KEY=nvapi-... ./cosmos_nim_setup.sh login       # auth to nvcr.io
-#   NGC_API_KEY=nvapi-... ./cosmos_nim_setup.sh pull        # pull both NIM images (slow)
+#   NGC_API_KEY=<your-ngc-key> ./cosmos_nim_setup.sh login       # auth to nvcr.io
+#   NGC_API_KEY=<your-ngc-key> ./cosmos_nim_setup.sh pull        # pull both NIM images (slow)
 #   ./cosmos_nim_setup.sh run-transfer                       # run Cosmos Transfer 2.5 on :8000
 #   ./cosmos_nim_setup.sh stop-transfer                      # kill it (free VRAM for Reason)
 #   ./cosmos_nim_setup.sh run-reason                         # run Cosmos Reason 2 on :8001
@@ -39,7 +39,7 @@ preflight() {
 case "$cmd" in
   login)
     preflight
-    [[ -n "${NGC_API_KEY:-}" ]] || { echo "set NGC_API_KEY (nvapi-...)" >&2; exit 1; }
+    [[ -n "${NGC_API_KEY:-}" ]] || { echo "set NGC_API_KEY (NGC personal key)" >&2; exit 1; }
     echo "$NGC_API_KEY" | docker login nvcr.io -u '$oauthtoken' --password-stdin
     echo "login OK"
     ;;
