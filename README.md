@@ -130,3 +130,16 @@ Scripts: `teleop/restore_protection.py` (reg 19 and 13), `teleop/set_reg19.py` (
 
 Starter repo and challenge design by Dhruv Diddi (NVIDIA). Thanks to the NVIDIA and Nebius crews at the venue,
 and to the team that lent a second arm pair.
+
+## Media
+
+Raw captures from the day, unedited.
+
+| File | What |
+|---|---|
+| `media/phone_clip_2.mp4` | The real station: SO-101 follower, orange 3x3 pickup grid, blue cubes, green pads |
+| `media/phone_clip_1.mp4` | Camera rig and station setup |
+| `media/real_teleop_clip.mp4` | 32 s of real leader/follower teleop (browser recorder session) |
+| `media/cosmos_frame.png` | Cosmos Transfer before/after frame |
+| `media/station_photo_1..4.jpeg` | Light box, station, and the organisers' top-down layout diagram |
+| `docs/cosmos_samples/`, `docs/eval/` | Cosmos-transferred clips and closed-loop sim eval clips (policy attempting, 0/10) |
